@@ -591,6 +591,17 @@ require('lazy').setup({
             'vue',
           },
         },
+        volar = {
+          cmd = { 'vue-language-server', '--stdio' },
+          init_options = {
+            typescript = {
+              tsdk = '/path/to/.npm/lib/node_modules/typescript/lib',
+              -- Alternative location if installed as root:
+              -- tsdk = '/usr/local/lib/node_modules/typescript/lib'
+            },
+          },
+          filetypes = { 'typescript', 'javascript', 'vue', 'json' },
+        },
         eslint = {
           cmd = { 'vscode-eslint-language-server', '--stdio' },
           filetypes = { 'javascript', 'typescript', 'vue' },
