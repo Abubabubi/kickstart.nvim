@@ -428,6 +428,7 @@ require('lazy').setup({
       { 'folke/neodev.nvim', opts = {} },
     },
     config = function()
+      require('lspconfig').eslint.setup {}
       -- Brief aside: **What is LSP?**
       --
       -- LSP is an initialism you've probably heard, but might not understand what it is.
@@ -604,10 +605,6 @@ require('lazy').setup({
           },
           filetypes = { 'typescript', 'javascript', 'vue', 'json' },
         },
-        -- eslint = {
-        --  cmd = { 'vscode-eslint-language-server', '--stdio' },
-        --  filetypes = { 'javascript', 'typescript', 'vue' },
-        --},
         tailwindcss = {},
         --
 
@@ -672,6 +669,7 @@ require('lazy').setup({
       },
     },
     opts = {
+      ft_parsers = { vue = 'vue' },
       notify_on_error = false,
       format_on_save = function(bufnr)
         -- Disable "format_on_save lsp_fallback" for languages that don't
@@ -690,7 +688,9 @@ require('lazy').setup({
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
-        -- javascript = { { "prettierd", "prettier" } },
+        javascript = { { 'prettierd', 'prettier' } },
+        vue = { { 'prettierd', 'prettier' } },
+        typescript = { { 'prettierd', 'prettier' } },
       },
     },
   },
@@ -817,7 +817,7 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'desert'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
