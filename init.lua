@@ -102,7 +102,7 @@ vim.g.have_nerd_font = true
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -160,6 +160,9 @@ vim.opt.scrolloff = 10
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+-- Prevent wsl visual block mode remap
+-- vim.keymap.set('n', 'q', '<c-v>', { noremap = true })
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
@@ -564,6 +567,9 @@ require('lazy').setup({
       --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+      local mason_registry = require 'mason-registry'
+      local vue_language_server_path = mason_registry.get_package('vue-language-server'):get_install_path() .. '/node_modules/@vue/language-server'
+
       local servers = {
         -- clangd = {},
         -- gopls = {},
@@ -580,16 +586,12 @@ require('lazy').setup({
             plugins = {
               {
                 name = '@vue/typescript-plugin',
-                location = '/usr/local/lib/node_modules/@vue/typescript-plugin',
-                languages = { 'javascript', 'typescript', 'vue' },
+                location = vue_language_server_path,
+                languages = { 'vue' },
               },
             },
           },
-          filetypes = {
-            'javascript',
-            'typescript',
-            'vue',
-          },
+          filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
         },
         volar = {
           cmd = { 'vue-language-server', '--stdio' },
@@ -602,10 +604,10 @@ require('lazy').setup({
           },
           filetypes = { 'typescript', 'javascript', 'vue', 'json' },
         },
-        eslint = {
-          cmd = { 'vscode-eslint-language-server', '--stdio' },
-          filetypes = { 'javascript', 'typescript', 'vue' },
-        },
+        -- eslint = {
+        --  cmd = { 'vscode-eslint-language-server', '--stdio' },
+        --  filetypes = { 'javascript', 'typescript', 'vue' },
+        --},
         tailwindcss = {},
         --
 
@@ -866,7 +868,19 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
+      ensure_installed = {
+        'bash',
+        'c',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'vim',
+        'vimdoc',
+        'typescript',
+        'vue',
+      },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
