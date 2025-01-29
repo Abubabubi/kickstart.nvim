@@ -582,7 +582,7 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
-        tsserver = {
+        ts_ls = {
           init_options = {
             plugins = {
               {
@@ -688,9 +688,9 @@ require('lazy').setup({
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
-        javascript = { { 'prettierd', 'prettier' } },
-        vue = { { 'prettierd', 'prettier' } },
-        typescript = { { 'prettierd', 'prettier' } },
+        javascript = { 'prettierd', 'prettier' },
+        vue = { 'prettierd', 'prettier' },
+        typescript = { 'prettierd', 'prettier' },
       },
     },
   },
